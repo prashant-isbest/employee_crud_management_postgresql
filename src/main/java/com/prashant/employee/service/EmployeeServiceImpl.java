@@ -67,14 +67,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public List<Employee> getMatchedEmployees(Long id, String firstName, String lastName, String email) {
 
 		List<Employee> matchedEmployeeList = new ArrayList<>();
-
-		if (id != null) {
-			matchedEmployeeList.add(this.getEmployee(id));
-			return matchedEmployeeList;
-		} else {
-			matchedEmployeeList = employeeRepository
-					.findByOptionalFirstNameAndOptionalLastNameAndoptionalEmail(firstName, lastName, email);
-		}
+		matchedEmployeeList = employeeRepository
+				.findByOptionalIdOptionalFirstNameAndOptionalLastNameAndOptionalEmail(id, firstName, lastName, email);
 		return matchedEmployeeList;
 	}
 

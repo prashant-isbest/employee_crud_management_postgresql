@@ -12,11 +12,12 @@ import com.prashant.employee.model.Employee;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
-        @Query("select e from Employee e where " + "(:fn is null or e.firstName = :fn) and "
+        @Query("select e from Employee e where " + "(:id is null or e.id = :id) and"
+                        + "(:fn is null or e.firstName = :fn) and "
                         + "(:ln is null or e.lastName = :ln) and " + "(:em is null or e.email = :em)")
-        List<Employee> findByOptionalFirstNameAndOptionalLastNameAndoptionalEmail(
+        List<Employee> findByOptionalIdOptionalFirstNameAndOptionalLastNameAndOptionalEmail(
+                        @Param("id") Long id,
                         @Param("fn") String firstName,
                         @Param("ln") String lastName,
                         @Param("em") String email);
-
 }
