@@ -1,0 +1,1 @@
+The API docs are available here and can be tried on the UI itself https://prashant-employee-management-2.herokuapp.com/swagger-ui.html#/employee-controller
