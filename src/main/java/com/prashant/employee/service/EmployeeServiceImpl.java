@@ -17,11 +17,23 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Autowired
 	private EmployeeRepository employeeRepository;
 
+	/**
+	 * This gives a list of employee objects available in db
+	 * 
+	 * @return {@code List<Employee>}
+	 */
 	@Override
 	public List<Employee> getEmployees() {
 		return employeeRepository.findAll();
 	}
 
+	/**
+	 * If the employee object with given id exists it returns it, otherwise throws
+	 * {@code NoSuchElementException}
+	 * 
+	 * @param
+	 * @return Matched {@code Employee} object
+	 */
 	@Override
 	public Employee getEmployee(Long id) {
 		if (employeeRepository.findById(id).isPresent()) {
@@ -31,6 +43,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 		}
 	}
 
+	/**
+	 * Inserts an employee object in the db
+	 * 
+	 * @param
+	 * @return The new {@code Employee} object inserted in db
+	 */
 	@Override
 	public Employee insertEmployee(EmployeeData employeeData) {
 
@@ -40,11 +58,22 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return employeeRepository.save(newEmployee);
 	}
 
+	/**
+	 * Hard delete the employee object in db
+	 * 
+	 * @param
+	 */
 	@Override
 	public void deleteEmployee(Long employeeId) {
 		employeeRepository.deleteById(employeeId);
 	}
 
+	/**
+	 * This updates the employee object with given id and with the newdata in db
+	 * 
+	 * @param
+	 * @return The updated {@code Employee} object
+	 */
 	@Override
 	public Employee updateEmployee(Long id, EmployeeData e) {
 
@@ -63,6 +92,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return employeeRepository.save(retreivedEmployee);
 	}
 
+	/**
+	 * This returns a list of employees with the matched paarameters , at least one
+	 * param is required , if no employees matched empty list will be returned
+	 * 
+	 * @param
+	 * @return {@code List<Employee>} where each {@code Employee} object matches the
+	 *         passed parameters
+	 */
 	@Override
 	public List<Employee> getMatchedEmployees(Long id, String firstName, String lastName, String email) {
 
