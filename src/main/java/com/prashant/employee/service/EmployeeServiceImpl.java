@@ -39,7 +39,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		if (employeeRepository.findById(id).isPresent()) {
 			return employeeRepository.findById(id).get();
 		} else {
-			throw new NoSuchElementException("Employee with " + id + " does not exist");
+			throw new NoSuchElementException("Employee with id: " + id + " does not exist");
 		}
 	}
 
