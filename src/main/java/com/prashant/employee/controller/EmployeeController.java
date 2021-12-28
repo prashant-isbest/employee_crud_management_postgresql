@@ -11,7 +11,9 @@ import com.prashant.employee.model.ErrorModel;
 import com.prashant.employee.service.EmployeeService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -62,6 +64,13 @@ public class EmployeeController {
 
 	/**
 	 * Saves a new employee with given data and return it
+	 * Request body example -
+	 * { "firstName" : "updated_name_here" }
+	 * this will set only
+	 * the firstName of the employee.
+	 * A bad example - {"firstName" : "updated_name_here" , } this will give bad
+	 * request error so don't add comma ( , ) in the request body if you don't wish
+	 * to add value for another field
 	 * 
 	 * @param
 	 * @return {@code ResponseEntity} with the new employee as entity body
@@ -69,7 +78,9 @@ public class EmployeeController {
 	@PostMapping("/employee")
 	public ResponseEntity<Employee> saveEmployee(@Valid @RequestBody EmployeeData employeedata) throws Exception {
 		Employee newEmployee = employeeService.insertEmployee(employeedata);
-		return new ResponseEntity<>(newEmployee, HttpStatus.CREATED);
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+		return new ResponseEntity<>(newEmployee, httpHeaders, HttpStatus.CREATED);
 	}
 
 	/**
@@ -100,12 +111,13 @@ public class EmployeeController {
 	 * @return {@code ResponseEntity} with updated {@code Employee} object as entity
 	 *         body
 	 */
-	@PutMapping({ "/{employeeId}" })
+	@PutMapping({ "employee/{employeeId}" })
 	public ResponseEntity<Employee> updateEmployee(@PathVariable("employeeId") Long employeeId,
 			@RequestBody EmployeeData employeeData) {
-
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 		Employee updatedEmployee = employeeService.updateEmployee(employeeId, employeeData);
-		return new ResponseEntity<>(updatedEmployee, HttpStatus.OK);
+		return new ResponseEntity<>(updatedEmployee, httpHeaders, HttpStatus.OK);
 	}
 
 	/**
