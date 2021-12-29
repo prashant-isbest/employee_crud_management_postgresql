@@ -221,16 +221,11 @@ class EmployeeControllerTest {
                 EmployeeData employeeDataToPut = new EmployeeData();
                 employeeDataToPut.setEmail("newemail@gmail.com");
 
-                // doThrow(new NoSuchElementException("Employee with id " + 1 + " does not
-                // exist")).when(service)
-                // .updateEmployee(anyLong(),
-                // any(EmployeeData.class));
-
                 given(service.updateEmployee(anyLong(), any(EmployeeData.class)))
                                 .willThrow(new NoSuchElementException("Employee with id " + 1 + " does not exist"));
 
                 // Execute the POST request
-                mockMvc.perform(put("/rest/widget/{id}", 1l)
+                mockMvc.perform(put("/zorp/employee/{id}", 1l)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(asJsonString(employeeDataToPut)))
 
@@ -241,7 +236,8 @@ class EmployeeControllerTest {
                                 .andExpect(jsonPath("$.httpStatus", is("NOT_FOUND")))
                                 .andExpect(jsonPath("$.timestamp", is(notNullValue())))
                                 .andExpect(jsonPath("$.message", is("Entity not found")))
-                                .andExpect(jsonPath("$.details", is("Employee with id " + 1 + " does not exist")));
+                                .andExpect(jsonPath("$.details", is("Employee with id " + 1 + " does not exist")))
+                                .andDo(print());
         }
 
         // @Test
